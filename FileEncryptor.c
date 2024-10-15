@@ -2,6 +2,8 @@
 #include <libakrypt.h>
 #include <unistd.h>
 #include <getopt.h>
+#include <errno.h>
+#include <string.h>
 
 void read_text_from_file(char* dest, char* filename);
 void write_text_to_file(const char* src, char* filename);
@@ -17,10 +19,12 @@ int main(int argc, char** argv) {
     while((opt = getopt(argc, argv, ":p:f:")) != -1) {
         switch (opt) {
             case 'p':
-                password = optarg;
+                strncpy(password, optarg, 255);
+                password[255] = '\0';
                 break;
             case 'f':
-                filename = optarg;
+                strncpy(filename, optarg, 251);
+                filename[251] = '\0';
                 break;
             case ':':
                 printf("option needs a value \n");
@@ -46,7 +50,7 @@ int main(int argc, char** argv) {
     
     int code = 1;
     if ((code = ak_bckey_ofb(&ctx, openText, cipherText, strlen(openText), iv, 8)) != ak_error_ok) {
-        printf("error while encrypting");
+        printf("error while encrypting with code: %d", code);
         return code;
     };
 
@@ -69,7 +73,7 @@ int main(int argc, char** argv) {
 void read_text_from_file(char* dest, char* filename) {
     FILE* inputFile;
     if ((inputFile = fopen(filename, "r")) == NULL) {
-        printf("Can't open file %s\n", filename);
+        printf("Can't open file %s\n%s", filename, strerror(errno));
         exit(EXIT_FAILURE);
     }
 
@@ -85,11 +89,12 @@ void write_text_to_file(const char* src, char* filename) {
     char* ecnryptedFilename = malloc(256);
     char ext[4] = ".enc";
     memcpy(ecnryptedFilename, filename, 252);
-    strcat(ecnryptedFilename, ext);
+    memcpy(ecnryptedFilename + strlen(filename), ext, 4);
+    
 
     FILE* outputFile;
     if ((outputFile = fopen(ecnryptedFilename, "w")) == NULL) {
-        printf("Can't open file %s\n", filename);
+        printf("Can't open file %s\n%s", filename, strerror(errno));
         exit(EXIT_FAILURE);
     }
 
