@@ -8,6 +8,10 @@
 void read_text_from_file(char* dest, char* filename);
 void write_text_to_file(const char* src, char* filename);
 
+/*! 
+ * \author Pavel Zilbershteyn
+ * \date 10.2024
+ */
 int main(int argc, char** argv) {
 
     int opt = -1;
@@ -16,6 +20,7 @@ int main(int argc, char** argv) {
     memset(password, 0, 256); 
     memset(filename, 0, 252); 
 
+    /// \brief parse arguments
     while((opt = getopt(argc, argv, ":p:f:")) != -1) {
         switch (opt) {
             case 'p':
@@ -35,29 +40,33 @@ int main(int argc, char** argv) {
         }
     } 
 
+    /// \brief read plaintext from file
     read_text_from_file(openText, filename);
 
-    if (ak_libakrypt_create(NULL) != ak_true) {
+    if (ak_libakrypt_create(NULL) != ak_true) { ///< Create libakrypt instance
         ak_libakrypt_destroy();
         return EXIT_FAILURE;
     }
 
-    struct bckey ctx;
-    ak_uint8 iv[8] = { 0x01, 0x02, 0x03, 0x04, 0x11, 0xaa, 0x4e, 0x12 };
+    struct bckey ctx; ///< define context
+    ak_uint8 iv[8] = { 0x01, 0x02, 0x03, 0x04, 0x11, 0xaa, 0x4e, 0x12 }; ///< define synchrolink
 
-    ak_bckey_create_magma(&ctx);
-    ak_bckey_set_key_from_password(&ctx, password, 256, "randomiz", 8);
+    ak_bckey_create_magma(&ctx); ///< Create Magma key instance
+    ak_bckey_set_key_from_password(&ctx, password, 256, "randomiz", 8); ///< Generate key based on password
     
     int code = 1;
+
+    /// We encrypt the plaintext in the gamming mode with output feedback
     if ((code = ak_bckey_ofb(&ctx, openText, cipherText, strlen(openText), iv, 8)) != ak_error_ok) {
         printf("error while encrypting with code: %d", code);
         return code;
     };
 
+    /// Save ciphertext to file with enc extension
     write_text_to_file(ak_ptr_to_hexstr(cipherText, strlen(cipherText), ak_false), filename);
     
 
-    // decipher
+    /// decipher example just in case
     // char* a = malloc(20*1024);
     // if ((code = ak_bckey_ofb(&ctx, cipherText, a, strlen(cipherText), iv, 8)) != ak_error_ok) {
     //     printf("error while encrypting");
@@ -66,10 +75,18 @@ int main(int argc, char** argv) {
 
     // printf("deciphertext: %s\n", a);
 
-    ak_libakrypt_destroy();
+    ak_libakrypt_destroy(); ///< destroy libakrypt instance
     return EXIT_SUCCESS;
 }
 
+/*!
+ \brief The function of reading text from a file
+ \details The function that allows you to read text 
+ from a file named "filename" and write it to "dest".
+ It is needed to get plaintext
+ \param[out] dest Target memory area
+ \param[in] filename The name of file with plaintext
+*/
 void read_text_from_file(char* dest, char* filename) {
     FILE* inputFile;
     if ((inputFile = fopen(filename, "r")) == NULL) {
@@ -85,6 +102,14 @@ void read_text_from_file(char* dest, char* filename) {
     fclose(inputFile);
 }
 
+/*!
+ \brief The function of writing text to a file
+ \details The function that allows you to write the src text 
+ to a file named "filename". Creates a file with the
+ enc extension that will store the ciphertext
+ \param[in] src The text to be written to the file
+ \param[in] filename The name of file with plaintext
+*/
 void write_text_to_file(const char* src, char* filename) {
     char* ecnryptedFilename = malloc(256);
     char ext[4] = ".enc";

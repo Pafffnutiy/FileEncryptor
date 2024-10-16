@@ -1,0 +1,86 @@
+\hypertarget{FileEncryptor_8c}{}\doxysection{File\+Encryptor.\+c File Reference}
+\label{FileEncryptor_8c}\index{FileEncryptor.c@{FileEncryptor.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$libakrypt.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$getopt.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{FileEncryptor_8c_aacc54acbb487cd48c0c39902a2e3dda5}{read\+\_\+text\+\_\+from\+\_\+file}} (char $\ast$dest, char $\ast$filename)
+\begin{DoxyCompactList}\small\item\em The function of reading text from a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{FileEncryptor_8c_a8fc761ff2f373a4b9fa7300cbe887c44}{write\+\_\+text\+\_\+to\+\_\+file}} (const char $\ast$src, char $\ast$filename)
+\begin{DoxyCompactList}\small\item\em The function of writing text to a file. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{FileEncryptor_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{FileEncryptor_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{FileEncryptor_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{FileEncryptor.c@{FileEncryptor.c}!main@{main}}
+\index{main@{main}!FileEncryptor.c@{FileEncryptor.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\begin{DoxyAuthor}{Author}
+Pavel Zilbershteyn 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+10.\+2024 
+\end{DoxyDate}
+parse arguments
+
+read plaintext from file
+
+\texorpdfstring{$<$}{<} Create libakrypt instance
+
+\texorpdfstring{$<$}{<} define context
+
+\texorpdfstring{$<$}{<} define synchrolink
+
+\texorpdfstring{$<$}{<} Create Magma key instance
+
+\texorpdfstring{$<$}{<} Generate key based on password
+
+We encrypt the plaintext in the gamming mode with output feedback
+
+Save ciphertext to file with enc extension
+
+decipher example just in case
+
+\texorpdfstring{$<$}{<} destroy libakrypt instance\mbox{\Hypertarget{FileEncryptor_8c_aacc54acbb487cd48c0c39902a2e3dda5}\label{FileEncryptor_8c_aacc54acbb487cd48c0c39902a2e3dda5}} 
+\index{FileEncryptor.c@{FileEncryptor.c}!read\_text\_from\_file@{read\_text\_from\_file}}
+\index{read\_text\_from\_file@{read\_text\_from\_file}!FileEncryptor.c@{FileEncryptor.c}}
+\doxysubsubsection{\texorpdfstring{read\_text\_from\_file()}{read\_text\_from\_file()}}
+{\footnotesize\ttfamily void read\+\_\+text\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{char $\ast$}]{dest,  }\item[{char $\ast$}]{filename }\end{DoxyParamCaption})}
+
+
+
+The function of reading text from a file. 
+
+The function that allows you to read text from a file named \char`\"{}filename\char`\"{} and write it to \char`\"{}dest\char`\"{}. It is needed to get plaintext 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em dest} & Target memory area \\
+\hline
+\mbox{\texttt{ in}}  & {\em filename} & The name of file with plaintext \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{FileEncryptor_8c_a8fc761ff2f373a4b9fa7300cbe887c44}\label{FileEncryptor_8c_a8fc761ff2f373a4b9fa7300cbe887c44}} 
+\index{FileEncryptor.c@{FileEncryptor.c}!write\_text\_to\_file@{write\_text\_to\_file}}
+\index{write\_text\_to\_file@{write\_text\_to\_file}!FileEncryptor.c@{FileEncryptor.c}}
+\doxysubsubsection{\texorpdfstring{write\_text\_to\_file()}{write\_text\_to\_file()}}
+{\footnotesize\ttfamily void write\+\_\+text\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$}]{filename }\end{DoxyParamCaption})}
+
+
+
+The function of writing text to a file. 
+
+The function that allows you to write the src text to a file named \char`\"{}filename\char`\"{}. Creates a file with the enc extension that will store the ciphertext 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em src} & The text to be written to the file \\
+\hline
+\mbox{\texttt{ in}}  & {\em filename} & The name of file with plaintext \\
+\hline
+\end{DoxyParams}
