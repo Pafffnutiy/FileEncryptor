@@ -1,0 +1,23 @@
+\begin{theindex}
+
+  \item {FileEncryptor.c}, \hyperpage{3}
+    \subitem {main}, \hyperpage{3}
+    \subitem {read\_text\_from\_file}, \hyperpage{4}
+    \subitem {write\_text\_to\_file}, \hyperpage{4}
+
+  \indexspace
+
+  \item {main}
+    \subitem {FileEncryptor.c}, \hyperpage{3}
+
+  \indexspace
+
+  \item {read\_text\_from\_file}
+    \subitem {FileEncryptor.c}, \hyperpage{4}
+
+  \indexspace
+
+  \item {write\_text\_to\_file}
+    \subitem {FileEncryptor.c}, \hyperpage{4}
+
+\end{theindex}
