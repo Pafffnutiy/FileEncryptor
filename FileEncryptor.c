@@ -10,7 +10,7 @@ void write_text_to_file(const char* src, char* filename);
 
 /*! 
  * \author Pavel Zilbershteyn
- * \date 15.10.2024
+ * \date 10.2024
  */
 int main(int argc, char** argv) {
 
@@ -48,8 +48,8 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    struct bckey ctx; ///< context
-    ak_uint8 iv[8] = { 0x01, 0x02, 0x03, 0x04, 0x11, 0xaa, 0x4e, 0x12 }; ///< syncholink
+    struct bckey ctx; ///< define context
+    ak_uint8 iv[8] = { 0x01, 0x02, 0x03, 0x04, 0x11, 0xaa, 0x4e, 0x12 }; ///< define synchrolink
 
     ak_bckey_create_magma(&ctx); ///< Create Magma key instance
     ak_bckey_set_key_from_password(&ctx, password, 256, "randomiz", 8); ///< Generate key based on password
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
 
     // printf("deciphertext: %s\n", a);
 
-    ak_libakrypt_destroy();
+    ak_libakrypt_destroy(); ///< destroy libakrypt instance
     return EXIT_SUCCESS;
 }
 
