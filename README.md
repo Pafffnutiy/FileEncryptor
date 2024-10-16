@@ -22,4 +22,6 @@ mingw32-make.exe
 ```
 
 ## Usage
+```bash
 ./FileEncrypt -f ..\example.txt -p 2003
+```
